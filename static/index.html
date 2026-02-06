@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OmniChat</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="model-selector">
+            <select id="modelSelect" class="model-dropdown">
+              <option value="openai" selected>OpenAI</option>
+              <option value="groq">Groq</option>
+              <option value="qwen">Qwen</option>
+              <option value="gemini">Gemini</option>
+              <option value="llama">Llama</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sidebar-actions">
+          <h3>Quick Actions</h3>
+
+          <!-- Image Generation -->
+          <div class="action-group">
+            <button class="action-button" id="addImageGenBtn">
+              <span class="action-icon">🎨</span>
+              <span class="action-text">Generate Image</span>
+            </button>
+          </div>
+
+          <!-- Text-to-Speech Toggle -->
+          <div class="action-group">
+            <button class="action-button" id="toggleTTSBtn">
+              <span class="action-icon">🔊</span>
+              <span class="action-text">TTS: Off</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="status-indicator" id="statusIndicator">
+            <span class="status-dot"></span>
+            <span id="statusText">Ready</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Chat Area -->
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMessages">
+            <!-- Welcome Message -->
+            <div class="welcome-screen" id="welcomeScreen">
+              <h1>Welcome to OmniChat</h1>
+              <p>Select an action from the sidebar or start typing below</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+          <div class="input-wrapper">
+            <button class="plus-button" id="plusButton" title="Add attachment">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 5v14M5 12h14"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+            <input
+              type="text"
+              id="messageInput"
+              class="message-input"
+              placeholder="Ask anything"
+            />
+            <!-- <button class="voice-button" id="voiceButton" title="Voice input">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" stroke="currentColor" stroke-width="2"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button> -->
+            <button class="send-button" id="sendButton" title="Send message">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Hidden file inputs -->
+      <input
+        type="file"
+        id="imageUpload"
+        accept="image/*"
+        style="display: none"
+      />
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/static/script.js"></script>
+  </body>
+</html>

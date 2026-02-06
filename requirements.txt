@@ -1,0 +1,36 @@
+# Core Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-dotenv==1.0.0
+
+# Pydantic (with settings)
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# AI/LLM APIs
+openai==1.10.0
+groq>=1.0.0
+google-generativeai==0.3.2
+fireworks-ai==0.9.0
+tavily-python==0.3.3
+
+# HTTP Clients
+httpx==0.26.0
+aiohttp==3.9.1
+
+# File Handling
+python-multipart==0.0.6
+aiofiles==23.2.1
+pillow==10.2.0
+
+# Audio Processing
+pydub==0.25.1
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+
+# Optional Development Tools
+black==24.1.1
+gTTS==2.5.1
+
