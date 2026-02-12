@@ -6,6 +6,10 @@ const modelSelect = document.getElementById("modelSelect");
 const statusText = document.getElementById("statusText");
 const welcomeScreen = document.getElementById("welcomeScreen");
 
+// Sidebar elements
+const sidebar = document.getElementById("sidebar");
+const sidebarToggle = document.getElementById("sidebarToggle");
+
 // Sidebar buttons
 const addImageGenBtn = document.getElementById("addImageGenBtn");
 const addAudioBtn = document.getElementById("addAudioBtn");
@@ -40,6 +44,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Event Listeners
 function setupEventListeners() {
+  // Sidebar toggle
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      sidebar.classList.toggle("open");
+    });
+
+    // Also try touchend for mobile
+    sidebarToggle.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      sidebar.classList.toggle("open");
+    });
+  }
+
+  // Close sidebar when clicking outside on mobile
+  if (sidebar) {
+    const closeHandler = (e) => {
+      if (window.innerWidth <= 768 && sidebar.classList.contains("open")) {
+        if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+          sidebar.classList.remove("open");
+        }
+      }
+    };
+    document.addEventListener("click", closeHandler);
+    document.addEventListener("touchend", closeHandler);
+  }
+
   // Send message
   if (sendButton) {
     sendButton.addEventListener("click", sendMessage);

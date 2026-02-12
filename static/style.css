@@ -445,38 +445,18 @@ body {
   background: #3f3f3f;
 }
 
-/* Responsive Design */
+/* Responsive Design - Desktop */
+.sidebar-toggle {
+  display: none;
+}
+
 @media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    left: -280px;
-    z-index: 1000;
-    height: 100vh;
-    transition: left 0.3s ease;
-  }
-
-  .sidebar.open {
-    left: 0;
-  }
-
-  .main-content {
-    width: 100%;
-  }
-
   .welcome-screen h1 {
     font-size: 28px;
   }
 
   .message-image {
     max-width: 100%;
-  }
-
-  .chat-container {
-    padding: 16px;
-  }
-
-  .input-area {
-    padding: 16px;
   }
 }
 
@@ -680,23 +660,61 @@ body {
 @media (max-width: 768px) {
   body {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
   }
 
   .app-container {
     flex-direction: row;
     height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .sidebar-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1001;
+    background: #FF9900;
+    border: none;
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   .sidebar {
-    width: 40%;
-    min-width: 150px;
-    max-width: 220px;
+    width: 70%;
+    max-width: 280px;
     border-right: 1px solid #2f2f2f;
     border-bottom: none;
     padding: 8px;
     height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
-    position: relative;
+    position: fixed;
+    left: -100%;
+    top: 0;
+    z-index: 1000;
+    background: #171717;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.open {
     left: 0;
   }
 
@@ -723,16 +741,40 @@ body {
   }
 
   .main-content {
-    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
   }
 
   .chat-container {
-    height: calc(100vh - 56px);
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .chat-messages {
+    padding: 0 8px;
   }
 
   .input-area {
-    padding: 2px 8px;
+    padding: 8px;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    background: #212121;
+  }
+
+  .input-wrapper {
+    padding: 6px 8px;
+  }
+
+  .message-input {
+    font-size: 14px;
   }
 
   .model-dropdown {

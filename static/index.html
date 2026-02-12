@@ -2,14 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>OmniChat</title>
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
     <div class="app-container">
+      <!-- Sidebar Toggle Button (Mobile Only) -->
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <span>☰</span>
+      </button>
+
       <!-- Sidebar -->
-      <aside class="sidebar">
+      <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
           <div class="model-selector">
             <select id="modelSelect" class="model-dropdown">
