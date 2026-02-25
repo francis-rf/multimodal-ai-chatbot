@@ -10,7 +10,7 @@ A FastAPI-based multi-modal chatbot with vision, text-to-speech, and image gener
 
 - **Text Chat**: Multiple LLM providers (OpenAI, Groq, Gemini, Qwen, Llama)
 - **Vision**: Analyze images with Gemini vision model
-- **Text-to-Speech**: Generate speech with Groq TTS
+- **Text-to-Speech**: Generate speech with gTTS
 - **Image Generation**: Create images with Stable Diffusion
 - **Web Search**: Tavily-powered web search tool calling (supported by Llama, Qwen, and Gemini models)
 
@@ -19,6 +19,8 @@ A FastAPI-based multi-modal chatbot with vision, text-to-speech, and image gener
 - **Backend**: FastAPI + Python 3.12
 - **AI APIs**: Groq, Google Gemini, Fireworks AI, Tavily
 - **Frontend**: Vanilla JavaScript, HTML, CSS
+- **Cloud**: AWS ECR + App Runner + Secrets Manager
+- **CI/CD**: GitHub Actions
 
 ## 🚀 Quick Start
 
@@ -28,6 +30,7 @@ A FastAPI-based multi-modal chatbot with vision, text-to-speech, and image gener
 - API Keys:
   - Groq API key
   - Google Gemini API key
+  - Fireworks AI API key
   - Tavily API key
 
 ### Installation
@@ -73,6 +76,36 @@ docker build -t multimodal-chatbot .
 docker run -p 8000:8000 --env-file .env multimodal-chatbot
 ```
 
+## ☁️ AWS Deployment
+
+### Services Used
+
+| Service | Purpose |
+|---|---|
+| ECR | Docker image registry |
+| App Runner | Managed container hosting |
+| Secrets Manager | API key storage |
+
+### Setup
+
+1. Store API keys in **AWS Secrets Manager** under secret name `multimodal-chatbot`
+2. Push Docker image to **ECR**
+3. Deploy via **App Runner** pointing to the ECR image
+
+### GitHub Actions CI/CD
+
+Add the following secrets to your GitHub repository:
+
+| Secret | Description |
+|---|---|
+| `AWS_ACCESS_KEY_ID` | IAM user access key |
+| `AWS_SECRET_ACCESS_KEY` | IAM user secret key |
+
+On every push to `main`, the workflow will:
+1. Build the Docker image
+2. Push to ECR
+3. Trigger a new deployment on App Runner
+
 ## 📁 Project Structure
 
 ```
@@ -83,17 +116,21 @@ docker run -p 8000:8000 --env-file .env multimodal-chatbot
 │   └── tools.py          # Tool calling (Tavily)
 ├── services/              # Service layer
 │   ├── image_service.py  # Vision & image generation
-│   └── speech_service.py # STT & TTS
+│   └── speech_service.py # TTS
 ├── utils/                 # Utilities
-│   ├── config.py         # Configuration
+│   ├── config.py         # Configuration (Secrets Manager + .env)
 │   └── logger.py         # Logging
 ├── static/                # Frontend
 │   ├── index.html
 │   ├── script.js
 │   └── style.css
+├── .github/workflows/     # CI/CD
+│   └── deploy.yml
+├── Dockerfile
+├── .dockerignore
 ├── logs/                  # Application logs
 ├── uploads/               # Uploaded files
-└── requirements.txt       # Python dependencies
+└── requirements.txt
 ```
 
 ## 📡 API Endpoints
