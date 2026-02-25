@@ -1,22 +1,45 @@
 """
 Configuration Management using Pydantic Settings
-Loads environment variables from .env file
+Loads environment variables from .env file or AWS Secrets Manager
 """
 
+import json
+import boto3
+from botocore.exceptions import ClientError
 from pydantic_settings import BaseSettings
 from pydantic import Field
-from typing import List
+from typing import List, Optional
 from pathlib import Path
 
 
+def get_secrets(secret_name: str = "multimodal-chatbot", region: str = "us-east-1") -> dict:
+    """Fetch secrets from AWS Secrets Manager. Returns empty dict if unavailable."""
+    try:
+        client = boto3.client("secretsmanager", region_name=region)
+        response = client.get_secret_value(SecretId=secret_name)
+        return json.loads(response["SecretString"])
+    except Exception:
+        return {}
+
+
+_secrets = get_secrets()
+
+
 class Settings(BaseSettings):
-    """Main Settings class that loads all configuration from .env file"""
+    """Main Settings class that loads all configuration from .env file or Secrets Manager"""
 
     # API Keys
-    groq_api_key: str
-    gemini_api_key: str
-    fireworks_api_key: str
-    tavily_api_key: str
+    groq_api_key: Optional[str] = None
+    gemini_api_key: Optional[str] = None
+    fireworks_api_key: Optional[str] = None
+    tavily_api_key: Optional[str] = None
+
+    def __init__(self, **data):
+        # Inject Secrets Manager values if not already set via .env
+        for key, value in _secrets.items():
+            if key.lower() not in data:
+                data[key.lower()] = value
+        super().__init__(**data)
 
     # Model Configuration
     openai_model: str = "openai/gpt-oss-120b"
