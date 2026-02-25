@@ -3,8 +3,12 @@
 ![Python](https://img.shields.io/badge/python-3.12+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-latest-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+[![CI/CD](https://github.com/francis-rf/multimodal-ai-chatbot/actions/workflows/deploy.yml/badge.svg)](https://github.com/francis-rf/multimodal-ai-chatbot/actions/workflows/deploy.yml)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-AWS%20App%20Runner-orange?logo=amazonaws)](https://meprv5hz3z.us-east-1.awsapprunner.com/)
 
 A FastAPI-based multi-modal chatbot with vision, text-to-speech, and image generation capabilities.
+
+> **Live Demo:** [https://meprv5hz3z.us-east-1.awsapprunner.com/](https://meprv5hz3z.us-east-1.awsapprunner.com/)
 
 ## 🎯 Features
 
@@ -38,8 +42,8 @@ A FastAPI-based multi-modal chatbot with vision, text-to-speech, and image gener
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
-cd 1.Multi_Modal_chatbot
+git clone https://github.com/francis-rf/multimodal-ai-chatbot.git
+cd multimodal-ai-chatbot
 ```
 
 2. Install dependencies:
@@ -63,9 +67,7 @@ python app.py
 
 5. Open browser:
 
-```
-http://localhost:8000
-```
+`http://localhost:8000`
 
 ## 🐳 Docker Deployment
 
@@ -92,44 +94,63 @@ docker run -p 8000:8000 --env-file .env multimodal-chatbot
 2. Push Docker image to **ECR**
 3. Deploy via **App Runner** pointing to the ECR image
 
-### GitHub Actions CI/CD
+### Live URL
 
-Add the following secrets to your GitHub repository:
+The app is deployed and accessible at:
+
+**[https://meprv5hz3z.us-east-1.awsapprunner.com/](https://meprv5hz3z.us-east-1.awsapprunner.com/)**
+
+## ⚙️ GitHub Actions CI/CD
+
+Automated deployment is configured via `.github/workflows/deploy.yml`.
+
+### Workflow: Deploy to AWS App Runner
+
+On every push to `main`, the pipeline:
+
+1. **Checks out** the code
+2. **Configures** AWS credentials
+3. **Logs in** to Amazon ECR
+4. **Builds & pushes** the Docker image to ECR
+5. **Triggers** a new deployment on AWS App Runner
+
+### Required GitHub Secrets
+
+Add the following secrets to your GitHub repository (`Settings > Secrets > Actions`):
 
 | Secret | Description |
 |---|---|
 | `AWS_ACCESS_KEY_ID` | IAM user access key |
 | `AWS_SECRET_ACCESS_KEY` | IAM user secret key |
 
-On every push to `main`, the workflow will:
-1. Build the Docker image
-2. Push to ECR
-3. Trigger a new deployment on App Runner
+### Workflow Status
+
+[![Deploy to AWS App Runner](https://github.com/francis-rf/multimodal-ai-chatbot/actions/workflows/deploy.yml/badge.svg)](https://github.com/francis-rf/multimodal-ai-chatbot/actions/workflows/deploy.yml)
 
 ## 📁 Project Structure
 
 ```
-1.Multi_Modal_chatbot/
-├── app.py                 # FastAPI application
-├── models/                # AI model wrappers
-│   ├── chat_models.py    # Chat models
-│   └── tools.py          # Tool calling (Tavily)
-├── services/              # Service layer
-│   ├── image_service.py  # Vision & image generation
-│   └── speech_service.py # TTS
-├── utils/                 # Utilities
-│   ├── config.py         # Configuration (Secrets Manager + .env)
-│   └── logger.py         # Logging
-├── static/                # Frontend
+multimodal-ai-chatbot/
+├── app.py                  # FastAPI application
+├── models/                 # AI model wrappers
+│   ├── chat_models.py      # Chat models
+│   └── tools.py            # Tool calling (Tavily)
+├── services/               # Service layer
+│   ├── image_service.py    # Vision & image generation
+│   └── speech_service.py   # TTS
+├── utils/                  # Utilities
+│   ├── config.py           # Configuration (Secrets Manager + .env)
+│   └── logger.py           # Logging
+├── static/                 # Frontend
 │   ├── index.html
 │   ├── script.js
 │   └── style.css
-├── .github/workflows/     # CI/CD
+├── .github/workflows/      # CI/CD
 │   └── deploy.yml
 ├── Dockerfile
 ├── .dockerignore
-├── logs/                  # Application logs
-├── uploads/               # Uploaded files
+├── logs/                   # Application logs
+├── uploads/                # Uploaded files
 └── requirements.txt
 ```
 
@@ -145,7 +166,7 @@ On every push to `main`, the workflow will:
 ## 📸 Screenshots
 
 ![Application Interface](screenshots/image.png)
-_Multi Modal Chatbot Interface with image generation_
+Multi Modal Chatbot Interface with image generation
 
 ## 📄 License
 
